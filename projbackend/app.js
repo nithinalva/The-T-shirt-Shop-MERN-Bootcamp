@@ -1,8 +1,15 @@
  const mongoose = require('mongoose');
  const express=require("express");
- const app=express();
+
 require('dotenv').config()
- 
+// const bodyParser=require('body-parser')
+const CookieParser=require("cookie-parser")
+const cors=require("cors")
+const app=express();
+const authRoutes=require('./routes/auth')
+
+
+//connectivity
  mongoose.Promise = global.Promise;
 
 
@@ -20,5 +27,19 @@ require('dotenv').config()
      }
  });
  
+ //My routes
+app.use('/api',authRoutes)
+
+
+
+
+
+//common routes
+ app.use(express.json());
+ app.use(CookieParser())
+ app.use(cors())
+
+
+
  const port=8000;
  app.listen(port,()=>console.log(`i am listening to port ${port}`))
