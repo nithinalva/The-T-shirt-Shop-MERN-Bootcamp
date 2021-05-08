@@ -2,9 +2,9 @@
  const express=require("express");
 
 require('dotenv').config()
-// const bodyParser=require('body-parser')
+const bodyParser=require('body-parser')
 const CookieParser=require("cookie-parser")
-const cors=require("cors")
+const Cors=require("cors")
 const app=express();
 const authRoutes=require('./routes/auth')
 
@@ -27,6 +27,19 @@ const authRoutes=require('./routes/auth')
      }
  });
  
+//common routes
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+ app.use(CookieParser())
+ app.use(Cors())
+
+ 
+
+
+
  //My routes
 app.use('/api',authRoutes)
 
@@ -34,10 +47,7 @@ app.use('/api',authRoutes)
 
 
 
-//common routes
- app.use(express.json());
- app.use(CookieParser())
- app.use(cors())
+
 
 
 

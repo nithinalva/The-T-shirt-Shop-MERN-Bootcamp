@@ -41,7 +41,7 @@ var userSchema= new mongoose.Schema({
     encry_password: {
         type:String,
         
-        required:true,
+         required:true,
     },
 
     salt:String,
@@ -60,25 +60,38 @@ var userSchema= new mongoose.Schema({
 
 
 
-});
+},{timestamps:true}
+);
 
-userSchema.virtual("plain_password")
-    .set(function(plane_password){
+userSchema.
+    virtual("password").set(function(password){
 
-        this._plane_password=plane_password
+        this._password=password
         this.salt=uuidv4();
-        this.encry_password=this.securePassword(plane_password)
+        this.encry_password=this.securePassword(password)
+        console.log(this.salt)
     })
     .get(function(){
         return this._plane_password
     })
 
-//creating a metho
+
+// userSchema
+//   .virtual("password")
+//   .set(function(password) {
+//     this._password = password;
+//     this.salt = uuidv4();
+//     this.encry_password = this.securePassword(password);
+//   })
+//   .get(function() {
+//     return this._password;
+//   });
+// //creating a metho
 
 
 
 
-userSchema.method={
+userSchema.methods={
 
     authenticate:function(plainpassword){
         return this.securePassword(plainpassword)===this.encry_password;
@@ -96,6 +109,7 @@ userSchema.method={
 
         try{
                 return crypto.createHmac('sha256',this.salt).update(plainpassword)
+                .digest('hex')
 
         }catch(err){
 
@@ -106,6 +120,6 @@ userSchema.method={
     }
    
 },
-{timeStamps:true}
+
 
 module.exports= mongoose.model("User", userSchema)
