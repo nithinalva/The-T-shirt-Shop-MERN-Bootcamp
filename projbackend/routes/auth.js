@@ -1,10 +1,10 @@
 const express=require("express");
 const router=express.Router();
 const { check, validationResult } = require('express-validator');
-const {Signup,SignOut}=require("../controllers/auth")
+const {Signup,SignOut,Signin}=require("../controllers/auth")    
 const User=require('../models/user')
 
-
+//USER REGISTRATION
 router.post("/signup",
 
 [check("name")
@@ -31,6 +31,24 @@ check('email').custom(value => {
 
 
 ,Signup)
+
+
+
+
+//user login
+router.post("/signin",
+
+[check("email")
+.isEmail()
+.withMessage('pleasse enter a valid email'),
+
+check('password').isLength({min:3})
+.withMessage("the password is not valid ")
+]
+
+
+
+,Signin)
 
 
 

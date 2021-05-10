@@ -27,7 +27,7 @@ const authRoutes=require('./routes/auth')
      }
  });
  
-//common routes
+//common middlewares
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

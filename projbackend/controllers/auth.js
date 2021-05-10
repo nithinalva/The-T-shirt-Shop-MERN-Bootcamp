@@ -1,12 +1,10 @@
 const User=require('../models/user')
 const {validationResult } = require('express-validator');
+var expressJwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
+require('dotenv').config()
 
-exports.SignOut=(req,res)=>{
-    // return res.send("you are signed out")
-    res.json({
-        msg: "you are signedout succefully"
-    })
-}
+
 
 
 
@@ -44,3 +42,78 @@ exports.Signup=(req,res)=>{
 
   
 }
+
+
+
+exports.Signin=(req,res)=>{
+
+
+    
+
+    const errors=validationResult(req)
+    if(!errors.isEmpty()){
+
+        return res.status(400).json({
+
+            error:errors.array()[0].msg
+            
+        })
+    }
+
+
+
+
+    const {email,password}= req.body;
+
+    User.findOne({email},(err,user )=>{
+
+        if(err || !user){
+           return res.status(401).json({err:"User ddesnt exists"})
+        }
+
+
+        if(!user.authenticate(password)){
+
+            return res.status(401).json({err:"Please check user name and password "})
+
+        }
+        //CREATING  A TOKEN
+        const token= jwt.sign({id:user.id},process.env.SECRET)
+
+        //putting a token to cookie
+
+        res.cookie("token",token,{expire:new Date()+9999})
+        
+            //send response to front end  dont send a passwrd
+
+            const {id,name,email,role}=user;
+            return res.json({token,user:{id,name,email,role}})
+    })
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exports.SignOut=(req,res)=>{
+    // return res.send("you are signed out")
+
+    res.clearCookie("token");       //clear the cookie whos name is "token" just one line
+    res.json({
+        msg: "you are signedout succefully"
+    })
+}
+
+
