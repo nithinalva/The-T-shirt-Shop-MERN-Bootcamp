@@ -117,3 +117,32 @@ exports.SignOut=(req,res)=>{
 }
 
 
+
+//protected  routes
+ //built in MIDDLEWARES
+exports.isSignedIn=expressJwt(      //decrypting the jwt
+    {secret:process.env.SECRET,
+    userProperty:'auth'
+    
+    })
+
+
+ 
+// CUSTOM MIDDLEWARES
+exports.isAuthenticated=(req,res,next)=>{
+        //req.profile is a property set from front end 
+    let checker=req.profile && req.auth && req.profile.id== req.auth.id;
+    if(!checker){
+
+        return res.status(403).json({error:"you are unauthorized "})
+    }
+    next();
+}
+
+exports.isAdmin=(req,res,next)=>{
+    if(!req.profile.role){
+
+        return res.status(403).json({error:"you are not Admin"})
+    }
+        next(); 
+}

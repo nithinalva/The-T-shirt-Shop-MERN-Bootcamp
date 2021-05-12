@@ -7,7 +7,7 @@ const CookieParser=require("cookie-parser")
 const Cors=require("cors")
 const app=express();
 const authRoutes=require('./routes/auth')
-
+const userRoutes =require('./routes/user')
 
 //connectivity
  mongoose.Promise = global.Promise;
@@ -46,7 +46,7 @@ app.use('/api',authRoutes)
 
 
 
-
+app.use('/api',userRoutes)
 
 
 

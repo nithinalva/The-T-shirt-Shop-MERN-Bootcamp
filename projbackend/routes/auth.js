@@ -1,7 +1,7 @@
 const express=require("express");
 const router=express.Router();
 const { check, validationResult } = require('express-validator');
-const {Signup,SignOut,Signin}=require("../controllers/auth")    
+const {Signup,SignOut,Signin, isSignedIn}=require("../controllers/auth")    
 const User=require('../models/user')
 
 //USER REGISTRATION
@@ -54,6 +54,18 @@ check('password').isLength({min:3})
 
 
 router.get("/signout",SignOut )
+
+
+
+
+
+// router.get('/test',isSignedIn,(req,res)=>{
+
+//   return res.json(req.auth)
+// })
+
+
+
 
 
 
