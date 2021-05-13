@@ -8,7 +8,7 @@ const Cors=require("cors")
 const app=express();
 const authRoutes=require('./routes/auth')
 const userRoutes =require('./routes/user')
-
+const categoryRoutes=require('./routes/category')
 //connectivity
  mongoose.Promise = global.Promise;
 
@@ -48,7 +48,7 @@ app.use('/api',authRoutes)
 
 app.use('/api',userRoutes)
 
-
+app.use('/api',categoryRoutes)
 
 
  const port=8000;

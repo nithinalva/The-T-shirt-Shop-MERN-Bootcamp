@@ -20,7 +20,7 @@ User.findById(id).exec((err,user)=>{
     }
 
    req.profile=user;
-   console.log(req.profile)
+ 
    next()
 })
 
@@ -76,6 +76,8 @@ exports.allusers=(req,res)=>{
 }
 
 
+///diNT UNDERSTAND
+
 exports.userPurchaseList=(req,res)=>{
 
     Order.find({user:req.profile._id})
@@ -89,4 +91,43 @@ exports.userPurchaseList=(req,res)=>{
 
         return res.status(200).json(order)
     })
+}
+
+
+
+
+///Full doubt
+exports.pushOrderInPurchaseList=(req,res,next)=>{
+
+
+let upDatedpurchases=[]
+    //?????
+req.body.order.products.forEach((product)=>{
+
+        purchases.push({
+            id:product._id,
+            name:product.name,
+            description:product.description,
+            category:product.category,
+            quantity:product.quantity,
+            amount:req.body.order.amount,
+            transaction_id:req.body.order.transaction_id
+        })
+
+})
+
+//store the above to db
+User.findOneAndUpdate({id:req.profile.id}, ///understand the defference bewteen $set and $push
+
+                        {$push:{purchases:upDatedpurchases}},{new:true}).exec((err,purchases)=>{
+
+                            if(err){
+                                return res.status(400).json({
+                                    error:"unable to save purchase list"
+                                })
+                            }
+                            next();
+                        })
+
+
 }
