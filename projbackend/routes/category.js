@@ -22,7 +22,7 @@ router.post('/category/create/:userId',isSignedIn,isAuthenticated,isAdmin,create
 
 
 router.get("/category/:categoryId",getCategory)
-router.get("/category/:categoryId",getAllCategory)
+router.get("/categories",getAllCategory)
 
 
 //updateroutes

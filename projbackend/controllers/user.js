@@ -36,7 +36,7 @@ exports.getUser=(req,res)=>{
 
     req.profile.salt=undefined;
     req.profile.encry_password=undefined;
-    return res.status(200).json(user)
+    return res.status(200).json(req.profile)
    
 }
 

@@ -35,6 +35,35 @@ Category.findById(id).exec((err,cate)=>{
 }
 
 
+exports.deleteCategory=(req,res)=>{
+
+    const category=req.category;
+    // console.log(category)
+    
+
+    // res.json(category)
+
+        category.remove((err,deletedCategory)=>{
+
+            if(err){
+
+                return res.json({msg:"FAiled to delete"})
+            }
+
+            res.json(`succesfully deleted`)
+        })
+}
+
+
+
+
+
+
+
+
+
+
+
 
 exports.getCategory=(req,res)=>{
 
@@ -75,17 +104,5 @@ exports.updateCategory=(req,res)=>{
 }
 
 
-exports.deleteCategory=(res,req)=>{
 
-    const category=req.category;
 
-    category.remove((err,category)=>{       //method deleted
-        if(err){
-
-            return res.status(400).json({error:"Deletion Failed"})
-        }
-
-        return res.status(200).json({msg:`${category} Successfully deleted`})
-
-    })
-}

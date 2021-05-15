@@ -4,7 +4,7 @@ const {getUserById, getUser, allusers, updateUser,userPurchaseList}=require('../
 const {isSignedIn,isAuthenticated ,isAdmin}=require('../controllers/auth')
 // const {getUserById}=require('../controllers/auth')
 
-
+ 
 router.get('/allusers', allusers)
 
 router.param('userId',getUserById)
