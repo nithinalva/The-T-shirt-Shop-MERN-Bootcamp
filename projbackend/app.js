@@ -43,14 +43,8 @@ app.use(express.urlencoded({ extended: true }));
 
  //My routes
 app.use('/api',authRoutes)
-
-
-
-
 app.use('/api',userRoutes)
-
 app.use('/api',categoryRoutes)
-
 app.use('/api',productRoutes)
 
 

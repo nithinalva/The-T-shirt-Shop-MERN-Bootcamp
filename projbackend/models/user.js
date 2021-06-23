@@ -72,7 +72,7 @@ userSchema.
         console.log(this.salt)
     })
     .get(function(){
-        return this._plane_password
+        return this._password
     })
 
 
@@ -94,7 +94,7 @@ userSchema.
 userSchema.methods={
 
     authenticate:function(plainpassword){
-        return this.securePassword(plainpassword)===this.encry_password;
+        return this.securePassword(plainpassword)===this.encry_password;            //boolean is returned
     },
 
 

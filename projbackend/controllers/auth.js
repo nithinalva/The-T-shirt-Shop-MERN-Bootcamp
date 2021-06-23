@@ -125,15 +125,18 @@ exports.isSignedIn=expressJwt(      //decrypting the jwt
     userProperty:'auth'
     
     })
-
-
+        //req.auth gives {
+            //id: User id of the signed user
+        //}
+ 
  
 // CUSTOM MIDDLEWARES
 exports.isAuthenticated=(req,res,next)=>{
         //req.profile is a property set from front end 
-    let checker=req.profile && req.auth && req.profile.id== req.auth.id;
+    let checker=req.profile && req.auth && req.profile.id==req.auth.id;
     if(!checker){
-
+        console.log(req.profile)
+        console.log(req.auth)
         return res.status(403).json({error:"you are unauthorized "})
     }
     next();

@@ -20,7 +20,7 @@ User.findById(id).exec((err,user)=>{
     }
 
    req.profile=user;
- 
+    
    next()
 })
 
